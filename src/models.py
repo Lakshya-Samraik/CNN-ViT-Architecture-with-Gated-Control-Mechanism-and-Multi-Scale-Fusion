@@ -3,8 +3,6 @@ class PatchEmbedding(nn.Module):
     
     def __init__(self, in_channels=768, embed_dim=768, patch_size=1):
         super().__init__()
-        # Use 1x1 conv to convert feature maps to embeddings
-        # This preserves spatial information while creating embeddings
         self.projection = nn.Conv2d(in_channels, embed_dim, 
                                   kernel_size=patch_size, stride=patch_size)
         
@@ -169,7 +167,7 @@ class VisionTransformer(nn.Module):
         x = self.norm(x)
         
         # Classification head (use only cls token)
-        cls_output = x[:, 0]  # [B, embed_dim]
+        cls_output = x[:, 0]  
         logits = self.head(cls_output)
         
         return logits
