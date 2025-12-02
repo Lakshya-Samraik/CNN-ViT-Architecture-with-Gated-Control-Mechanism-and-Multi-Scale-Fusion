@@ -70,6 +70,6 @@ def main():
         model_name_long, test_loader, device, f"Long_Training_LR_{lr_long}_Scheduled"
     )
 if __name__ == "__main__":
-    multiprocessing.freeze_support()  # For Windows compatibility
-    set_seed(42)                      # Ensure reproducibility
+    multiprocessing.freeze_support()  
+    set_seed(42)                      
     main()
