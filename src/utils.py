@@ -73,3 +73,38 @@ def make_dataloaders(train_path, test_path, train_transform, validation_transfor
     test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False, num_workers=4, worker_init_fn=worker_init_fn)
 
     return train_loader, validation_loader, test_loader
+def plot_metrics(results, title_prefix="Model", save_plots=True):
+    """Fixed version that saves plots instead of showing them"""
+    fig_w, fig_h = 6, 4
+
+    # Accuracy plot
+    fig, ax = plt.subplots(figsize=(fig_w, fig_h))
+    ax.plot(results["tr_acc"], label='Training Accuracy')
+    ax.plot(results["te_acc"], label='Validation Accuracy')
+    ax.set_title(f'{title_prefix} Accuracy')
+    ax.set_xlabel('Epochs')
+    ax.set_ylabel('Accuracy')
+    ax.legend()
+    ax.grid(True)
+    plt.tight_layout()
+    
+    if save_plots:
+        plt.savefig(f'{title_prefix}_accuracy.png', dpi=150, bbox_inches='tight')
+        print(f"✓ Accuracy plot saved as {title_prefix}_accuracy.png")
+    plt.close()  # Important: Close instead of show
+
+    # Loss plot
+    fig, ax = plt.subplots(figsize=(fig_w, fig_h))
+    ax.plot(results["tr_loss"], label='Training Loss')
+    ax.plot(results["te_loss"], label='Validation Loss')
+    ax.set_title(f'{title_prefix} Loss')
+    ax.set_xlabel('Epochs')
+    ax.set_ylabel('Loss')
+    ax.legend()
+    ax.grid(True)
+    plt.tight_layout()
+    
+    if save_plots:
+        plt.savefig(f'{title_prefix}_loss.png', dpi=150, bbox_inches='tight')
+        print(f"✓ Loss plot saved as {title_prefix}_loss.png")
+    plt.close()
